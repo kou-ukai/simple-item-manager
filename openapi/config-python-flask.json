@@ -1,0 +1,5 @@
+{
+  "featureCORS": "true",
+  "packageName": "simple_item_manager",
+  "serverPort": "5001"
+}
