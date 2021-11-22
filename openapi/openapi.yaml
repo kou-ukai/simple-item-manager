@@ -1,0 +1,164 @@
+openapi: '3.0.0'
+info:
+  title: 簡易物品管理WebAPI
+  version: 1.0.0
+servers:
+  - url: /api/v1
+paths:
+  /users/token:
+    post:
+      tags:
+        - User
+      summary: ログイン
+      description: NFCタグのシリアル番号でログインします。
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nfcSerialNo:
+                  type: string
+                  description: NFCタグのシリアル番号
+      responses:
+        "200":
+          description: ログイン成功
+        "400":
+          description: ログイン失敗
+  /items:
+    get:
+      tags:
+        - Item
+      summary: 物品情報一覧取得
+      description: 物品情報の一覧を取得します。
+      operationId: getItemList
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: includeUsing
+          in: query
+          description: 利用中を含む判定
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    post:
+      tags:
+        - Item
+      summary: 物品情報登録
+      description: 物品情報を登録します。
+      operationId: addItem
+      security:
+        - cookieAuth: []
+      requestBody:
+        description: 登録するコース配達状況情報情報
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    put:
+      tags:
+        - Item
+      summary: 物品情報更新
+      description: 物品情報を更新します。
+      operationId: updateItem
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          description: 物品ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 更新する物品情報
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        409:
+          description: 排他エラー
+components:
+  schemas:
+    User:
+      description: ユーザ
+      type: object
+      properties:
+        id:
+          type: string
+          description: ユーザID
+        name:
+          type: string
+          description: ユーザ名
+        serialNo:
+          type: string
+          description: NFCタグのシリアル番号
+    Item:
+      description: 物品
+      type: object
+      properties:
+        itemId:
+          type: string
+          description: 物品ID
+        name:
+          type: string
+          description: 物品名
+        image:
+          type: string
+          format: binary
+          description: 物品写真
+        userId:
+          type: string
+          description: 利用中のユーザID
+      allOf:
+        - $ref: '#/components/schemas/Footprint'
+# 共通
+    Footprint:
+      description: 痕跡
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: 作成日時
+        createdBy:
+          type: string
+          description: 作成者ID
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新日時
+        updatedBy:
+          type: string
+          description: 更新者ID
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: JSESSIONID 
