@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+
+  app:
+    build: ./
+    stdin_open: true
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - ./app/.vscode:/usr/src/app/.vscode
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.5
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: redmine
+      TZ: Asia/Tokyo
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  admin:
+    image: dpage/pgadmin4:4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@dummy.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      TZ: Asia/Tokyo
+    volumes:
+      - admin-db:/var/lib/pgadmin
+    ports:
+      - 8000:80
+
+volumes:
+  postgres-db:
+    driver: local
+  admin-db:
+    driver: local
