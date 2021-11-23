@@ -8,15 +8,19 @@ services:
     environment:
       TZ: Asia/Tokyo
     volumes:
-      - ./app/.vscode:/usr/src/app/.vscode
+      - .:/workspace
+    ports:
+      - 8080:8080
+      - 5001:5001
     depends_on:
       - db
 
   db:
-    image: postgres:12.5
+    image: postgres:13.5-alpine
     environment:
-      POSTGRES_PASSWORD: secret
-      POSTGRES_USER: redmine
+      POSTGRES_DB: simple
+      POSTGRES_USER: simple
+      POSTGRES_PASSWORD: password
       TZ: Asia/Tokyo
     ports:
       - 5432:5432

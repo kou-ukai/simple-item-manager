@@ -1,13 +1,10 @@
-FROM python:3.10-alpine
+FROM python:3.10-slim
 
-RUN mkdir -p /usr/src/server
+# git
+RUN apt update -y && apt upgrade -y && apt-get install -y curl git
 
-COPY ./server /usr/src/server
+# node
+RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash - \
+  && apt-get install -y nodejs
 
-WORKDIR /usr/src/server
-RUN pip3 install --no-cache-dir -r requirements.txt
-RUN apt update -y && apt upgrade -y && apt-get install -y curl
-RUN curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
-  && apt-get install -y nodejs npm
-
-WORKDIR /usr/src
+WORKDIR /workspace
