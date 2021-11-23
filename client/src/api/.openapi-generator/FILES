@@ -1,0 +1,11 @@
+.openapi-generator-ignore
+apis/ItemApi.ts
+apis/UserApi.ts
+apis/index.ts
+index.ts
+models/Footprint.ts
+models/InlineObject.ts
+models/Item.ts
+models/User.ts
+models/index.ts
+runtime.ts
