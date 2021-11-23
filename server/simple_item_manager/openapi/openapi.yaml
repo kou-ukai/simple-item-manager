@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: 簡易物品管理WebAPI
+  version: 1.0.0
+servers:
+- url: /api/v1
+paths:
+  /items:
+    get:
+      description: 物品情報の一覧を取得します。
+      operationId: get_item_list
+      parameters:
+      - description: 利用中を含む判定
+        explode: true
+        in: query
+        name: includeUsing
+        required: false
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Item'
+                type: array
+          description: OK
+      security:
+      - cookieAuth: []
+      summary: 物品情報一覧取得
+      tags:
+      - Item
+      x-openapi-router-controller: simple_item_manager.controllers.item_controller
+    post:
+      description: 物品情報を登録します。
+      operationId: add_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+        description: 登録するコース配達状況情報情報
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: OK
+      security:
+      - cookieAuth: []
+      summary: 物品情報登録
+      tags:
+      - Item
+      x-openapi-router-controller: simple_item_manager.controllers.item_controller
+    put:
+      description: 物品情報を更新します。
+      operationId: update_item
+      parameters:
+      - description: 物品ID
+        explode: false
+        in: path
+        name: itemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+        description: 更新する物品情報
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+          description: OK
+        "409":
+          description: 排他エラー
+      security:
+      - cookieAuth: []
+      summary: 物品情報更新
+      tags:
+      - Item
+      x-openapi-router-controller: simple_item_manager.controllers.item_controller
+  /users/token:
+    post:
+      description: NFCタグのシリアル番号でログインします。
+      operationId: login
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            schema:
+              properties:
+                nfcSerialNo:
+                  description: NFCタグのシリアル番号
+                  type: string
+              type: object
+        required: true
+      responses:
+        "200":
+          description: ログイン成功
+        "400":
+          description: ログイン失敗
+      summary: ログイン
+      tags:
+      - User
+      x-openapi-router-controller: simple_item_manager.controllers.user_controller
+components:
+  requestBodies:
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
+      required: true
+  schemas:
+    User:
+      description: ユーザ
+      properties:
+        id:
+          description: ユーザID
+          type: string
+        name:
+          description: ユーザ名
+          type: string
+        serialNo:
+          description: NFCタグのシリアル番号
+          type: string
+      type: object
+    Item:
+      allOf:
+      - $ref: '#/components/schemas/Footprint'
+      description: 物品
+      example:
+        itemId: itemId
+        image: ""
+        name: name
+        userId: userId
+      properties:
+        itemId:
+          description: 物品ID
+          title: itemId
+          type: string
+        name:
+          description: 物品名
+          title: name
+          type: string
+        image:
+          description: 物品写真
+          format: binary
+          title: image
+          type: string
+        userId:
+          description: 利用中のユーザID
+          title: userId
+          type: string
+      title: Item
+      type: object
+    Footprint:
+      description: 痕跡
+      properties:
+        createdAt:
+          description: 作成日時
+          format: date-time
+          title: createdAt
+          type: string
+        createdBy:
+          description: 作成者ID
+          title: createdBy
+          type: string
+        updatedAt:
+          description: 更新日時
+          format: date-time
+          title: updatedAt
+          type: string
+        updatedBy:
+          description: 更新者ID
+          title: updatedBy
+          type: string
+      title: Footprint
+      type: object
+    inline_object:
+      properties:
+        nfcSerialNo:
+          description: NFCタグのシリアル番号
+          type: string
+      type: object
+  securitySchemes:
+    cookieAuth:
+      in: cookie
+      name: JSESSIONID
+      type: apiKey
+      x-apikeyInfoFunc: simple_item_manager.controllers.security_controller_.info_from_cookieAuth
