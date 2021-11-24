@@ -26,6 +26,7 @@ services:
       - 5432:5432
     volumes:
       - postgres-db:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
 
   admin:
     image: dpage/pgadmin4:4
