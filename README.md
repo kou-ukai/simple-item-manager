@@ -1,4 +1,4 @@
-# training-flask
+# simple-item-manager
 FlaskとVue3で勉強がてら何か開発するリポジトリです。
 
 ## 要件
