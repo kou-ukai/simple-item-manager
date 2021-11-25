@@ -27,6 +27,31 @@ paths:
           description: ログイン成功
         "400":
           description: ログイン失敗
+    get:
+      tags:
+        - User
+      summary: ユーザ情報一覧取得
+      description: ユーザ情報の一覧を取得します。
+      operationId: getUserList
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: ids
+          in: query
+          description: ユーザID一覧
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
   /items:
     get:
       tags:
@@ -37,6 +62,18 @@ paths:
       security:
         - cookieAuth: []
       parameters:
+        - name: ids
+          in: query
+          description: 物品ID一覧
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: userId
+          in: query
+          description: 使用者ユーザID
+          schema:
+            type: integer
         - name: includeUsing
           in: query
           description: 利用中を含む判定
@@ -104,6 +141,30 @@ paths:
                 $ref: '#/components/schemas/Item'
         409:
           description: 排他エラー
+  /usages:
+    get:
+      tags:
+        - Usage
+      summary: 使用状況情報一覧取得
+      description: 使用状況情報の一覧を取得します。
+      operationId: getUsageist
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: userId
+          in: query
+          description: 使用者ユーザID
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usage'
 components:
   schemas:
     User:
@@ -111,7 +172,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
           description: ユーザID
         name:
           type: string
@@ -123,8 +184,8 @@ components:
       description: 物品
       type: object
       properties:
-        itemId:
-          type: string
+        id:
+          type: integer
           description: 物品ID
         name:
           type: string
@@ -135,9 +196,32 @@ components:
           description: 物品写真
         userId:
           type: string
-          description: 利用中のユーザID
+          description: 使用中のユーザID
       allOf:
         - $ref: '#/components/schemas/Footprint'
+    Usage:
+      description: 使用状況
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 使用状況ID
+        userId:
+          type: integer
+          description: 使用者ユーザID
+        startAt:
+          type: string
+          format: date-time
+          description: 使用開始日時
+        endAt:
+          type: string
+          format: date-time
+          description: 使用終了日時
+        items:
+          type: array
+          description: 物品ID一覧
+          items:
+            type: integer
 # 共通
     Footprint:
       description: 痕跡
