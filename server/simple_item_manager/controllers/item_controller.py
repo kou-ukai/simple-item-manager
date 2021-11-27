@@ -20,11 +20,15 @@ def add_item(item):  # noqa: E501
     return 'do some magic!'
 
 
-def get_item_list(include_using=None):  # noqa: E501
+def get_item_list(ids=None, user_id=None, include_using=None):  # noqa: E501
     """物品情報一覧取得
 
     物品情報の一覧を取得します。 # noqa: E501
 
+    :param ids: 物品ID一覧
+    :type ids: List[int]
+    :param user_id: 使用者ユーザID
+    :type user_id: int
     :param include_using: 利用中を含む判定
     :type include_using: bool
 

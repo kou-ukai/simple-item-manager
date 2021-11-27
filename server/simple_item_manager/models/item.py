@@ -17,11 +17,11 @@ class Item(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, item_id=None, name=None, image=None, user_id=None, created_at=None, created_by=None, updated_at=None, updated_by=None):  # noqa: E501
+    def __init__(self, id=None, name=None, image=None, user_id=None, created_at=None, created_by=None, updated_at=None, updated_by=None):  # noqa: E501
         """Item - a model defined in OpenAPI
 
-        :param item_id: The item_id of this Item.  # noqa: E501
-        :type item_id: str
+        :param id: The id of this Item.  # noqa: E501
+        :type id: int
         :param name: The name of this Item.  # noqa: E501
         :type name: str
         :param image: The image of this Item.  # noqa: E501
@@ -38,7 +38,7 @@ class Item(Model):
         :type updated_by: str
         """
         self.openapi_types = {
-            'item_id': str,
+            'id': int,
             'name': str,
             'image': file,
             'user_id': str,
@@ -49,7 +49,7 @@ class Item(Model):
         }
 
         self.attribute_map = {
-            'item_id': 'itemId',
+            'id': 'id',
             'name': 'name',
             'image': 'image',
             'user_id': 'userId',
@@ -59,7 +59,7 @@ class Item(Model):
             'updated_by': 'updatedBy'
         }
 
-        self._item_id = item_id
+        self._id = id
         self._name = name
         self._image = image
         self._user_id = user_id
@@ -80,27 +80,27 @@ class Item(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def item_id(self):
-        """Gets the item_id of this Item.
+    def id(self):
+        """Gets the id of this Item.
 
         物品ID  # noqa: E501
 
-        :return: The item_id of this Item.
-        :rtype: str
+        :return: The id of this Item.
+        :rtype: int
         """
-        return self._item_id
+        return self._id
 
-    @item_id.setter
-    def item_id(self, item_id):
-        """Sets the item_id of this Item.
+    @id.setter
+    def id(self, id):
+        """Sets the id of this Item.
 
         物品ID  # noqa: E501
 
-        :param item_id: The item_id of this Item.
-        :type item_id: str
+        :param id: The id of this Item.
+        :type id: int
         """
 
-        self._item_id = item_id
+        self._id = id
 
     @property
     def name(self):
@@ -152,7 +152,7 @@ class Item(Model):
     def user_id(self):
         """Gets the user_id of this Item.
 
-        利用中のユーザID  # noqa: E501
+        使用中のユーザID  # noqa: E501
 
         :return: The user_id of this Item.
         :rtype: str
@@ -163,7 +163,7 @@ class Item(Model):
     def user_id(self, user_id):
         """Sets the user_id of this Item.
 
-        利用中のユーザID  # noqa: E501
+        使用中のユーザID  # noqa: E501
 
         :param user_id: The user_id of this Item.
         :type user_id: str

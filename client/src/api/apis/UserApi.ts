@@ -18,7 +18,14 @@ import {
     InlineObject,
     InlineObjectFromJSON,
     InlineObjectToJSON,
+    User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
+
+export interface GetUserListRequest {
+    ids?: Array<number>;
+}
 
 export interface LoginRequest {
     inlineObject: InlineObject;
@@ -28,6 +35,38 @@ export interface LoginRequest {
  * 
  */
 export class UserApi extends runtime.BaseAPI {
+
+    /**
+     * ユーザ情報の一覧を取得します。
+     * ユーザ情報一覧取得
+     */
+    async getUserListRaw(requestParameters: GetUserListRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<User>>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.ids) {
+            queryParameters['ids'] = requestParameters.ids;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/users/token`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(UserFromJSON));
+    }
+
+    /**
+     * ユーザ情報の一覧を取得します。
+     * ユーザ情報一覧取得
+     */
+    async getUserList(requestParameters: GetUserListRequest, initOverrides?: RequestInit): Promise<Array<User>> {
+        const response = await this.getUserListRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * NFCタグのシリアル番号でログインします。

@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface User {
     /**
      * ユーザID
-     * @type {string}
+     * @type {number}
      * @memberof User
      */
-    id?: string;
+    id?: number;
     /**
      * ユーザ名
      * @type {string}

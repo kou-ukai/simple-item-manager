@@ -28,10 +28,10 @@ import {
 export interface Item {
     /**
      * 物品ID
-     * @type {string}
+     * @type {number}
      * @memberof Item
      */
-    itemId?: string;
+    id?: number;
     /**
      * 物品名
      * @type {string}
@@ -45,7 +45,7 @@ export interface Item {
      */
     image?: Blob;
     /**
-     * 利用中のユーザID
+     * 使用中のユーザID
      * @type {string}
      * @memberof Item
      */
@@ -86,7 +86,7 @@ export function ItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): Item
     }
     return {
         
-        'itemId': !exists(json, 'itemId') ? undefined : json['itemId'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'image': !exists(json, 'image') ? undefined : json['image'],
         'userId': !exists(json, 'userId') ? undefined : json['userId'],
@@ -106,7 +106,7 @@ export function ItemToJSON(value?: Item | null): any {
     }
     return {
         
-        'itemId': value.itemId,
+        'id': value.id,
         'name': value.name,
         'image': value.image,
         'userId': value.userId,

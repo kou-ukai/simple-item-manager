@@ -19,14 +19,14 @@ class User(Model):
         """User - a model defined in OpenAPI
 
         :param id: The id of this User.  # noqa: E501
-        :type id: str
+        :type id: int
         :param name: The name of this User.  # noqa: E501
         :type name: str
         :param serial_no: The serial_no of this User.  # noqa: E501
         :type serial_no: str
         """
         self.openapi_types = {
-            'id': str,
+            'id': int,
             'name': str,
             'serial_no': str
         }
@@ -59,7 +59,7 @@ class User(Model):
         ユーザID  # noqa: E501
 
         :return: The id of this User.
-        :rtype: str
+        :rtype: int
         """
         return self._id
 
@@ -70,7 +70,7 @@ class User(Model):
         ユーザID  # noqa: E501
 
         :param id: The id of this User.
-        :type id: str
+        :type id: int
         """
 
         self._id = id

@@ -10,6 +10,24 @@ paths:
       description: 物品情報の一覧を取得します。
       operationId: get_item_list
       parameters:
+      - description: 物品ID一覧
+        explode: true
+        in: query
+        name: ids
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: 使用者ユーザID
+        explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          type: integer
+        style: form
       - description: 利用中を含む判定
         explode: true
         in: query
@@ -90,7 +108,64 @@ paths:
       tags:
       - Item
       x-openapi-router-controller: simple_item_manager.controllers.item_controller
+  /usages:
+    get:
+      description: 使用状況情報の一覧を取得します。
+      operationId: get_usageist
+      parameters:
+      - description: 使用者ユーザID
+        explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Usage'
+                type: array
+          description: OK
+      security:
+      - cookieAuth: []
+      summary: 使用状況情報一覧取得
+      tags:
+      - Usage
+      x-openapi-router-controller: simple_item_manager.controllers.usage_controller
   /users/token:
+    get:
+      description: ユーザ情報の一覧を取得します。
+      operationId: get_user_list
+      parameters:
+      - description: ユーザID一覧
+        explode: true
+        in: query
+        name: ids
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                type: array
+          description: OK
+      security:
+      - cookieAuth: []
+      summary: ユーザ情報一覧取得
+      tags:
+      - User
+      x-openapi-router-controller: simple_item_manager.controllers.user_controller
     post:
       description: NFCタグのシリアル番号でログインします。
       operationId: login
@@ -125,31 +200,39 @@ components:
   schemas:
     User:
       description: ユーザ
+      example:
+        name: name
+        id: 0
+        serialNo: serialNo
       properties:
         id:
           description: ユーザID
-          type: string
+          title: id
+          type: integer
         name:
           description: ユーザ名
+          title: name
           type: string
         serialNo:
           description: NFCタグのシリアル番号
+          title: serialNo
           type: string
+      title: User
       type: object
     Item:
       allOf:
       - $ref: '#/components/schemas/Footprint'
       description: 物品
       example:
-        itemId: itemId
         image: ""
         name: name
+        id: 0
         userId: userId
       properties:
-        itemId:
+        id:
           description: 物品ID
-          title: itemId
-          type: string
+          title: id
+          type: integer
         name:
           description: 物品名
           title: name
@@ -160,10 +243,47 @@ components:
           title: image
           type: string
         userId:
-          description: 利用中のユーザID
+          description: 使用中のユーザID
           title: userId
           type: string
       title: Item
+      type: object
+    Usage:
+      description: 使用状況
+      example:
+        id: 0
+        endAt: 2000-01-23T04:56:07.000+00:00
+        userId: 6
+        items:
+        - 1
+        - 1
+        startAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: 使用状況ID
+          title: id
+          type: integer
+        userId:
+          description: 使用者ユーザID
+          title: userId
+          type: integer
+        startAt:
+          description: 使用開始日時
+          format: date-time
+          title: startAt
+          type: string
+        endAt:
+          description: 使用終了日時
+          format: date-time
+          title: endAt
+          type: string
+        items:
+          description: 物品ID一覧
+          items:
+            type: integer
+          title: items
+          type: array
+      title: Usage
       type: object
     Footprint:
       description: 痕跡

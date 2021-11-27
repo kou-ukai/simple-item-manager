@@ -1,6 +1,5 @@
 .dockerignore
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 Dockerfile
 README.md
@@ -12,6 +11,7 @@ simple_item_manager/__main__.py
 simple_item_manager/controllers/__init__.py
 simple_item_manager/controllers/item_controller.py
 simple_item_manager/controllers/security_controller_.py
+simple_item_manager/controllers/usage_controller.py
 simple_item_manager/controllers/user_controller.py
 simple_item_manager/encoder.py
 simple_item_manager/models/__init__.py
@@ -19,11 +19,11 @@ simple_item_manager/models/base_model_.py
 simple_item_manager/models/footprint.py
 simple_item_manager/models/inline_object.py
 simple_item_manager/models/item.py
+simple_item_manager/models/usage.py
 simple_item_manager/models/user.py
 simple_item_manager/openapi/openapi.yaml
 simple_item_manager/test/__init__.py
-simple_item_manager/test/test_item_controller.py
-simple_item_manager/test/test_user_controller.py
+simple_item_manager/test/test_usage_controller.py
 simple_item_manager/typing_utils.py
 simple_item_manager/util.py
 test-requirements.txt

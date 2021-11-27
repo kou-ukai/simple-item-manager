@@ -25,6 +25,8 @@ export interface AddItemRequest {
 }
 
 export interface GetItemListRequest {
+    ids?: Array<number>;
+    userId?: number;
     includeUsing?: boolean;
 }
 
@@ -79,6 +81,14 @@ export class ItemApi extends runtime.BaseAPI {
      */
     async getItemListRaw(requestParameters: GetItemListRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<Item>>> {
         const queryParameters: any = {};
+
+        if (requestParameters.ids) {
+            queryParameters['ids'] = requestParameters.ids;
+        }
+
+        if (requestParameters.userId !== undefined) {
+            queryParameters['userId'] = requestParameters.userId;
+        }
 
         if (requestParameters.includeUsing !== undefined) {
             queryParameters['includeUsing'] = requestParameters.includeUsing;
