@@ -1,22 +1,66 @@
+
+-- SEQUENCE: public.m_item_id_seq
+
+-- DROP SEQUENCE IF EXISTS public.m_item_id_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.m_item_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.m_item_id_seq
+    OWNER TO simple;
+
+-- SEQUENCE: public.m_user_id_seq
+
+-- DROP SEQUENCE IF EXISTS public.m_user_id_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.m_user_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.m_user_id_seq
+    OWNER TO simple;
+
+-- SEQUENCE: public.t_usage_id_seq
+
+-- DROP SEQUENCE IF EXISTS public.t_usage_id_seq;
+
+CREATE SEQUENCE IF NOT EXISTS public.t_usage_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+ALTER SEQUENCE public.t_usage_id_seq
+    OWNER TO simple;
+
+
 -- Table: public.m_item
 
--- DROP TABLE public.m_item;
+-- DROP TABLE IF EXISTS public.m_item;
 
-CREATE TABLE public.m_item
+CREATE TABLE IF NOT EXISTS public.m_item
 (
-    id character varying COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('m_item_id_seq'::regclass),
     name character varying COLLATE pg_catalog."default",
     image bytea,
     created_at timestamp with time zone,
-    created_by character varying COLLATE pg_catalog."default",
+    created_by integer,
     updated_at timestamp with time zone,
-    updated_by character varying COLLATE pg_catalog."default",
-    CONSTRAINT item_pkey PRIMARY KEY (id)
+    updated_by integer,
+    CONSTRAINT m_item_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.m_item
+ALTER TABLE IF EXISTS public.m_item
     OWNER to simple;
 
 COMMENT ON TABLE public.m_item
@@ -46,23 +90,24 @@ COMMENT ON COLUMN public.m_item.updated_by
 
 -- Table: public.m_user
 
--- DROP TABLE public.m_user;
+-- DROP TABLE IF EXISTS public.m_user;
 
-CREATE TABLE public.m_user
+CREATE TABLE IF NOT EXISTS public.m_user
 (
-    id character varying COLLATE pg_catalog."default" NOT NULL,
-    name character varying COLLATE pg_catalog."default" NOT NULL,
-    serial_no character varying COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('m_user_id_seq'::regclass),
+    name character varying COLLATE pg_catalog."default",
+    serial_no character varying COLLATE pg_catalog."default",
+    is_valid boolean,
     created_at timestamp with time zone,
-    created_by character varying COLLATE pg_catalog."default",
+    created_by integer,
     updated_at timestamp with time zone,
-    updated_by timestamp with time zone,
-    CONSTRAINT user_pkey PRIMARY KEY (id, name)
+    updated_by integer,
+    CONSTRAINT m_user_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.m_user
+ALTER TABLE IF EXISTS public.m_user
     OWNER to simple;
 
 COMMENT ON TABLE public.m_user
@@ -76,6 +121,9 @@ COMMENT ON COLUMN public.m_user.name
 
 COMMENT ON COLUMN public.m_user.serial_no
     IS 'NFCのシリアル番号';
+
+COMMENT ON COLUMN public.m_user.is_valid
+    IS '有効フラグ';
 
 COMMENT ON COLUMN public.m_user.created_at
     IS '作成日時';
@@ -92,9 +140,9 @@ COMMENT ON COLUMN public.m_user.updated_by
 
 -- Table: public.t_usage
 
--- DROP TABLE public.t_usage;
+-- DROP TABLE IF EXISTS public.t_usage;
 
-CREATE TABLE public.t_usage
+CREATE TABLE IF NOT EXISTS public.t_usage
 (
     id integer NOT NULL DEFAULT nextval('t_usage_id_seq'::regclass),
     user_id integer,
@@ -105,7 +153,7 @@ CREATE TABLE public.t_usage
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.t_usage
+ALTER TABLE IF EXISTS public.t_usage
     OWNER to simple;
 
 COMMENT ON TABLE public.t_usage
@@ -126,9 +174,9 @@ COMMENT ON COLUMN public.t_usage.end_at
 
 -- Table: public.t_usage_item
 
--- DROP TABLE public.t_usage_item;
+-- DROP TABLE IF EXISTS public.t_usage_item;
 
-CREATE TABLE public.t_usage_item
+CREATE TABLE IF NOT EXISTS public.t_usage_item
 (
     usage_id integer NOT NULL,
     item_id integer NOT NULL,
@@ -137,7 +185,7 @@ CREATE TABLE public.t_usage_item
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.t_usage_item
+ALTER TABLE IF EXISTS public.t_usage_item
     OWNER to simple;
 
 COMMENT ON TABLE public.t_usage_item
@@ -148,3 +196,4 @@ COMMENT ON COLUMN public.t_usage_item.usage_id
 
 COMMENT ON COLUMN public.t_usage_item.item_id
     IS '物品ID';
+
