@@ -29,7 +29,7 @@ services:
       - ./db:/docker-entrypoint-initdb.d
 
   admin:
-    image: dpage/pgadmin4:4
+    image: dpage/pgadmin4:6.2
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@dummy.com
       PGADMIN_DEFAULT_PASSWORD: password
