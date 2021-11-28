@@ -50,7 +50,7 @@ export class UserApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/users/token`,
+            path: `/users`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

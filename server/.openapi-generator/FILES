@@ -23,7 +23,6 @@ simple_item_manager/models/usage.py
 simple_item_manager/models/user.py
 simple_item_manager/openapi/openapi.yaml
 simple_item_manager/test/__init__.py
-simple_item_manager/test/test_usage_controller.py
 simple_item_manager/typing_utils.py
 simple_item_manager/util.py
 test-requirements.txt

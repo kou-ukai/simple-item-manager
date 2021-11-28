@@ -136,7 +136,7 @@ paths:
       tags:
       - Usage
       x-openapi-router-controller: simple_item_manager.controllers.usage_controller
-  /users/token:
+  /users:
     get:
       description: ユーザ情報の一覧を取得します。
       operationId: get_user_list
@@ -166,6 +166,7 @@ paths:
       tags:
       - User
       x-openapi-router-controller: simple_item_manager.controllers.user_controller
+  /users/token:
     post:
       description: NFCタグのシリアル番号でログインします。
       operationId: login

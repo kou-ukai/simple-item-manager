@@ -27,6 +27,7 @@ paths:
           description: ログイン成功
         "400":
           description: ログイン失敗
+  /users:
     get:
       tags:
         - User
