@@ -53,6 +53,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - User
+      summary: ユーザ情報登録
+      description: ユーザ情報を登録します。
+      operationId: addUser
+      requestBody:
+        description: 登録するユーザ情報情報
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
   /items:
     get:
       tags:

@@ -23,6 +23,10 @@ import {
     UserToJSON,
 } from '../models';
 
+export interface AddUserRequest {
+    user: User;
+}
+
 export interface GetUserListRequest {
     ids?: Array<number>;
 }
@@ -35,6 +39,41 @@ export interface LoginRequest {
  * 
  */
 export class UserApi extends runtime.BaseAPI {
+
+    /**
+     * ユーザ情報を登録します。
+     * ユーザ情報登録
+     */
+    async addUserRaw(requestParameters: AddUserRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<User>> {
+        if (requestParameters.user === null || requestParameters.user === undefined) {
+            throw new runtime.RequiredError('user','Required parameter requestParameters.user was null or undefined when calling addUser.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/users`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserToJSON(requestParameters.user),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
+    }
+
+    /**
+     * ユーザ情報を登録します。
+     * ユーザ情報登録
+     */
+    async addUser(requestParameters: AddUserRequest, initOverrides?: RequestInit): Promise<User> {
+        const response = await this.addUserRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * ユーザ情報の一覧を取得します。

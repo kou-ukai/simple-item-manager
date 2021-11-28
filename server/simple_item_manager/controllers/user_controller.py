@@ -6,6 +6,21 @@ from simple_item_manager.models.user import User  # noqa: E501
 from simple_item_manager import util
 
 
+def add_user(user):  # noqa: E501
+    """ユーザ情報登録
+
+    ユーザ情報を登録します。 # noqa: E501
+
+    :param user: 登録するユーザ情報情報
+    :type user: dict | bytes
+
+    :rtype: User
+    """
+    if connexion.request.is_json:
+        user = User.from_dict(connexion.request.get_json())  # noqa: E501
+    return 'do some magic!'
+
+
 def get_user_list(ids=None):  # noqa: E501
     """ユーザ情報一覧取得
 

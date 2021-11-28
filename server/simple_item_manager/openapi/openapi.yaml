@@ -166,6 +166,27 @@ paths:
       tags:
       - User
       x-openapi-router-controller: simple_item_manager.controllers.user_controller
+    post:
+      description: ユーザ情報を登録します。
+      operationId: add_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: 登録するユーザ情報情報
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+      summary: ユーザ情報登録
+      tags:
+      - User
+      x-openapi-router-controller: simple_item_manager.controllers.user_controller
   /users/token:
     post:
       description: NFCタグのシリアル番号でログインします。
