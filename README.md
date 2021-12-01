@@ -14,5 +14,7 @@ VSCodeの拡張機能「Remote - Containter」を使ってDockerコンテナ内�
 ```pip3 install --no-cache-dir -r requirements.txt```
 - 開発用インストール
 ```pip install -e .[dev]```
+- モデルのソースコード生成
+```sqlacodegen postgresql://simple:password@db:5432/simple```
 ### クライアント
 ```npm install```
