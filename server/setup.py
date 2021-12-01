@@ -27,6 +27,9 @@ setup(
     url="",
     keywords=["OpenAPI", "簡易物品管理WebAPI"],
     install_requires=REQUIRES,
+    extras_require={
+        "dev": ["sqlacodegen"]
+    },
     packages=find_packages(),
     package_data={'': ['openapi/openapi.yaml']},
     include_package_data=True,
