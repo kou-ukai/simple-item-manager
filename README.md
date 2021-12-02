@@ -15,6 +15,6 @@ VSCodeの拡張機能「Remote - Containter」を使ってDockerコンテナ内�
 - 開発用インストール
 ```pip install -e .[dev]```
 - モデルのソースコード生成
-```sqlacodegen postgresql://simple:password@db:5432/simple```
+```sqlacodegen postgresql://simple:password@db:5432/simple --outfile ./simple_item_manager/db.py```
 ### クライアント
 ```npm install```
