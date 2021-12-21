@@ -192,15 +192,10 @@ paths:
       description: NFCタグのシリアル番号でログインします。
       operationId: login
       requestBody:
-        $ref: '#/components/requestBodies/inline_object'
         content:
           application/json:
             schema:
-              properties:
-                nfcSerialNo:
-                  description: NFCタグのシリアル番号
-                  type: string
-              type: object
+              $ref: '#/components/schemas/LoginReq'
         required: true
       responses:
         "200":
@@ -212,14 +207,16 @@ paths:
       - User
       x-openapi-router-controller: simple_item_manager.controllers.user_controller
 components:
-  requestBodies:
-    inline_object:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/inline_object'
-      required: true
   schemas:
+    LoginReq:
+      description: ログイン要求
+      example:
+        serialNo: serialNo
+      properties:
+        serialNo:
+          description: NFCタグのシリアル番号
+          type: string
+      type: object
     User:
       description: ユーザ
       example:
@@ -329,12 +326,6 @@ components:
           title: updatedBy
           type: string
       title: Footprint
-      type: object
-    inline_object:
-      properties:
-        nfcSerialNo:
-          description: NFCタグのシリアル番号
-          type: string
       type: object
   securitySchemes:
     cookieAuth:

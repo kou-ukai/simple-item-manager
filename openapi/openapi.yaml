@@ -17,11 +17,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                nfcSerialNo:
-                  type: string
-                  description: NFCタグのシリアル番号
+              $ref: '#/components/schemas/LoginReq'
       responses:
         "200":
           description: ログイン成功
@@ -189,6 +185,13 @@ paths:
                   $ref: '#/components/schemas/Usage'
 components:
   schemas:
+    LoginReq:
+      description: ログイン要求
+      type: object
+      properties:
+        serialNo:
+          type: string
+          description: NFCタグのシリアル番号
     User:
       description: ユーザ
       type: object

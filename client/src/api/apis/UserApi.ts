@@ -15,9 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
-    InlineObject,
-    InlineObjectFromJSON,
-    InlineObjectToJSON,
+    LoginReq,
+    LoginReqFromJSON,
+    LoginReqToJSON,
     User,
     UserFromJSON,
     UserToJSON,
@@ -32,7 +32,7 @@ export interface GetUserListRequest {
 }
 
 export interface LoginRequest {
-    inlineObject: InlineObject;
+    loginReq: LoginReq;
 }
 
 /**
@@ -112,8 +112,8 @@ export class UserApi extends runtime.BaseAPI {
      * ログイン
      */
     async loginRaw(requestParameters: LoginRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.inlineObject === null || requestParameters.inlineObject === undefined) {
-            throw new runtime.RequiredError('inlineObject','Required parameter requestParameters.inlineObject was null or undefined when calling login.');
+        if (requestParameters.loginReq === null || requestParameters.loginReq === undefined) {
+            throw new runtime.RequiredError('loginReq','Required parameter requestParameters.loginReq was null or undefined when calling login.');
         }
 
         const queryParameters: any = {};
@@ -127,7 +127,7 @@ export class UserApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: InlineObjectToJSON(requestParameters.inlineObject),
+            body: LoginReqToJSON(requestParameters.loginReq),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

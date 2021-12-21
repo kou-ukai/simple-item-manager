@@ -17,8 +17,8 @@ simple_item_manager/encoder.py
 simple_item_manager/models/__init__.py
 simple_item_manager/models/base_model_.py
 simple_item_manager/models/footprint.py
-simple_item_manager/models/inline_object.py
 simple_item_manager/models/item.py
+simple_item_manager/models/login_req.py
 simple_item_manager/models/usage.py
 simple_item_manager/models/user.py
 simple_item_manager/openapi/openapi.yaml
