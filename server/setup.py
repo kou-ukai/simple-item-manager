@@ -16,7 +16,8 @@ VERSION = "1.0.0"
 REQUIRES = [
     "connexion>=2.0.2",
     "swagger-ui-bundle>=0.0.2",
-    "python_dateutil>=2.6.0"
+    "python_dateutil>=2.6.0",
+    "psycopg2-binary"
 ]
 
 setup(
@@ -27,6 +28,9 @@ setup(
     url="",
     keywords=["OpenAPI", "簡易物品管理WebAPI"],
     install_requires=REQUIRES,
+    extras_require={
+        "dev": ["sqlacodegen"]
+    },
     packages=find_packages(),
     package_data={'': ['openapi/openapi.yaml']},
     include_package_data=True,
