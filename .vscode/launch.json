@@ -9,7 +9,10 @@
       "type": "python",
       "request": "launch",
       "module": "simple_item_manager",
-      "cwd": "${workspaceFolder}/server"
+      "cwd": "${workspaceFolder}/server",
+      "env": {
+        "FLASK_ENV": "development"
+      },
     }
   ]
 }
