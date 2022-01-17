@@ -18,6 +18,7 @@ def main():
     CORS(app.app)
 
     # DB初期化
+    app.app.app_context().push()
     app.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://simple:password@db/simple'
     db.init_app(app.app)
