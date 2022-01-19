@@ -47,3 +47,9 @@ docker build -t simple_item_manager .
 # starting up a container
 docker run -p 5001:5001 simple_item_manager
 ```
+
+
+
+## メモ
+- Configuration Best Practices  
+https://flask.palletsprojects.com/en/2.0.x/config/#configuration-best-practices

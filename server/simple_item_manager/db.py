@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+def init_db(app):
+    db.init_app(app)
+
 class MItem(db.Model):
     __tablename__ = 'm_item'
     __table_args__ = {'comment': '物品マスタ'}

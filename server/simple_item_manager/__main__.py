@@ -5,6 +5,8 @@ from flask_cors import CORS
 
 from simple_item_manager import encoder
 from simple_item_manager.db import db
+from server.simple_item_manager.db import init_db
+from simple_item_manager.config import DevelopmentConfig
 
 
 def main():
@@ -17,11 +19,12 @@ def main():
     # add CORS support
     CORS(app.app)
 
+    # 設定読み込み
+    app.app.config.from_object(DevelopmentConfig())
+
     # DB初期化
     app.app.app_context().push()
-    app.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://simple:password@db/simple'
-    db.init_app(app.app)
+    init_db(app.app)
 
     app.run(port=5001)
 
